@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
+import Layout from "./Layout";
+
 function LanguageApp() {
   const { lang } = useParams();
   const { t, i18n } = useTranslation();
@@ -15,9 +17,7 @@ function LanguageApp() {
   }, [lang, i18n]);
 
   return (
-    <div>
-      <h1>{t('studyVietnamese')}</h1>
-    </div>
+    <h1>{t('studyVietnamese')}</h1>
   );
 }
 
@@ -25,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/:lang" element={<LanguageApp />} />
+  <Route path="/:lang" element={<Layout><LanguageApp /></Layout>} />
         <Route path="*" element={<Navigate to="/en" replace />} />
       </Routes>
     </BrowserRouter>
