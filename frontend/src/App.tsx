@@ -1,12 +1,35 @@
-import './App.css'
+import "./App.css";
+import { useTranslation } from "react-i18next";
+
+import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
+function LanguageApp() {
+  const { lang } = useParams();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (lang && i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, i18n]);
+
+  return (
+    <div>
+      <h1>{t('studyVietnamese')}</h1>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div>
-      <h1>Chúng ta cùng học tiếng Việt!</h1>
-      <p>We study Vietnamese together!</p>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/:lang" element={<LanguageApp />} />
+        <Route path="*" element={<Navigate to="/en" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
